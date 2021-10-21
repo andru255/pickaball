@@ -2,7 +2,6 @@ body {
   font-family: "Berkelium", Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  background:  #2f142f;
 }
 
 span {
@@ -10,4 +9,11 @@ span {
   width: 0;
   height: 0;
   font-size: 0.5px;
+}
+
+@font-face {
+  font-family: "Berkelium";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/berkelium/berkelium.ttf");
 }
