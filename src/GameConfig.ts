@@ -1,20 +1,28 @@
 import Phaser from "phaser";
+import GameOverScene from "./scenes/GameOverScene";
 
 import GameScene from "./scenes/GameScene";
+import GroundScene from "./scenes/GroundScene";
+import HighScoreScene from "./scenes/HighScoresScene";
+import HUDScene from "./scenes/HUDScene";
+import LoaderScene from "./scenes/LoaderScene";
+import LogoScene from "./scenes/LogoScene";
+import MenuScene from "./scenes/MenuScene";
+import PauseScene from "./scenes/PauseScene";
 
-// from: https://lospec.com/palette-list/retrocal-8
+// from: https://lospec.com/palette-list/funkyfuture-8
 export const COLOR_PALETTE = {
-  dark4: 0x2f142f,
-  dark3: 0x774448,
-  dark2: 0x2a584f,
-  dark1: 0x74a33f,
-  light4: 0x6eb8a8,
-  light3: 0xc6505a,
-  light2: 0xee9c5d,
-  light1: 0xfcffc0,
+  darkBlue: 0x2b0f54,
+  blue: 0x3368dc,
+  lightBlue: 0x49e7ec,
+  darkOrange: 0xab1f65,
+  orange: 0xff4f69,
+  lightOrange: 0xff8142,
+  yellow: 0xffda45,
+  white: 0xfff7f8,
 };
 
-export const GRID_UNIT = 16;
+export const GRID_UNIT = 25;
 
 export const GROUND = {
   X: GRID_UNIT * 2,
@@ -23,30 +31,27 @@ export const GROUND = {
   HEIGHT: GRID_UNIT * 17,
 };
 
-export const STORAGE_NAME = "anakonda-score";
+export const STORAGE_NAME = "pickaball-score";
+
+export const MAIN_TITLE = "PICK A BALL";
 
 export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 400,
-  height: 250,
+  width: 800,
+  height: 600,
   physics: {
     default: "arcade",
   },
   scene: [
-    //LogoScene,
-    //LoaderScene,
-    //MenuScene,
-    //HighScoreScene,
+    LogoScene,
+    LoaderScene,
+    MenuScene,
+    HighScoreScene,
     GameScene,
-    //HUDScene,
-    //GroundScene,
-    //PauseScene,
-    //GameOverScene,
+    HUDScene,
+    GroundScene,
+    PauseScene,
+    GameOverScene,
   ],
   plugins: {},
-  scale: {
-    zoom: 2,
-    mode: Phaser.Scale.ScaleModes.FIT,
-    autoCenter: Phaser.Scale.Center.CENTER_BOTH
-  }
 };
