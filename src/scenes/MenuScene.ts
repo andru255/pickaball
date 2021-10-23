@@ -8,13 +8,6 @@ export interface MenuOption {
   callback: () => void;
 }
 export default class MenuScene extends Phaser.Scene {
-  private iconAside?: Phaser.GameObjects.Sprite;
-  private currentOptionIndex;
-
-  private enterKey?: Phaser.Input.Keyboard.Key;
-  private upKey?: Phaser.Input.Keyboard.Key;
-  private downKey?: Phaser.Input.Keyboard.Key;
-
   private menuOptions: MenuOption[] = [];
 
   constructor() {
@@ -22,15 +15,12 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create() {
-    this.currentOptionIndex = 0;
     this.menuOptions = [
       {
         x: GRID_UNIT * 11,
         y: GRID_UNIT * 12,
         text: "START GAME!",
-        callback: () => {
-          this.scene.start("Game");
-        },
+        callback: () => {},
       },
       {
         x: GRID_UNIT * 11,
@@ -42,40 +32,19 @@ export default class MenuScene extends Phaser.Scene {
       },
     ];
 
-    this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkOrange);
+    // forcing to start the main game directly
+    this.scene.start("Game");
 
-    this.iconAside = this.add.sprite(
-      GRID_UNIT * 10,
-      this.menuOptions[0].y + GRID_UNIT / 2,
-      "food"
-    );
+    this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkOrange);
 
     this.add.text(GRID_UNIT * 4, GRID_UNIT * 5, MAIN_TITLE, {
       font: "82px Berkelium",
     });
 
-    this.enterKey = this.input.keyboard.addKey("ENTER");
-    this.upKey = this.input.keyboard.addKey("UP");
-    this.downKey = this.input.keyboard.addKey("DOWN");
-
     // rendering buttons
     this.menuOptions.forEach((option, index) => {
       this.buildMenuOption(option, index);
     });
-  }
-
-  update() {
-    if (this.enterKey?.isDown) {
-      this.menuOptions[this.currentOptionIndex].callback();
-    }
-
-    if (this.upKey?.isDown) {
-      this.goToOption(0);
-    }
-
-    if (this.downKey?.isDown) {
-      this.goToOption(1);
-    }
   }
 
   private buildMenuOption(
@@ -106,7 +75,5 @@ export default class MenuScene extends Phaser.Scene {
 
   private goToOption(indexOption: number) {
     const y = this.menuOptions[indexOption].y + GRID_UNIT / 2;
-    this.iconAside?.setY(y);
-    this.currentOptionIndex = indexOption;
   }
 }

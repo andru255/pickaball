@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { AnakondaObject } from "~/objects/Anakonda";
 import { BorderObject } from "~/objects/Border";
-import FoodImageObject from "~/objects/Food";
+import BallImageObject from "~/objects/Ball";
 import GridSprite from "~/sprites/GridSprite";
 
 export default class GroundScene extends Phaser.Scene {
@@ -19,8 +19,8 @@ export default class GroundScene extends Phaser.Scene {
     return new BorderObject(this, x, y);
   }
 
-  addFood(x = 0, y = 0, texture) {
-    return new FoodImageObject(this, x, y, texture);
+  addBall(x = 0, y = 0, texture) {
+    return new BallImageObject(this, x, y, texture);
   }
 
   addPlayer(x = 0, y = 0): AnakondaObject {

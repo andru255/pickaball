@@ -8,9 +8,7 @@ export default class HUDScene extends Phaser.Scene {
   private footerLabel?: Phaser.GameObjects.Text;
 
   private footerMessages = [
-    "Use the arrow keys to move around",
     "Press P to pause/resume the game",
-    "Be careful with the borders!",
     "Press M to mute/unmute the game",
   ];
 
@@ -45,7 +43,6 @@ export default class HUDScene extends Phaser.Scene {
         font: "28px Berkelium",
       }
     );
-    console.log("sound");
     let value = this.game.sound.mute ? "OFF" : "ON";
     this.setSoundStateText(value);
 

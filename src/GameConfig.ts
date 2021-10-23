@@ -22,7 +22,7 @@ export const COLOR_PALETTE = {
   white: 0xfff7f8,
 };
 
-export const GRID_UNIT = 25;
+export const GRID_UNIT = 16;
 
 export const GROUND = {
   X: GRID_UNIT * 2,
@@ -30,6 +30,8 @@ export const GROUND = {
   WIDTH: GRID_UNIT * 28,
   HEIGHT: GRID_UNIT * 17,
 };
+
+export const SOUNDS = ["shot", "die"];
 
 export const STORAGE_NAME = "pickaball-score";
 

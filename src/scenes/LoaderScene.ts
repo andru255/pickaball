@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT } from "~/GameConfig";
+import { COLOR_PALETTE, GRID_UNIT, SOUNDS } from "~/GameConfig";
 
 export default class LoaderScene extends Phaser.Scene {
   /** just for fun **/
@@ -12,8 +12,14 @@ export default class LoaderScene extends Phaser.Scene {
 
   preload() {
     // audios
-    this.load.audio("eat", ["sounds/eat.mp3", "sounds/eat.ogg"]);
-    this.load.audio("die", ["sounds/die.mp3", "sounds/die.ogg"]);
+    this.load.audio(SOUNDS[0], [
+      `sounds/${SOUNDS[0]}.mp3`,
+      `sounds/${SOUNDS[0]}.ogg`,
+    ]);
+    this.load.audio(SOUNDS[1], [
+      `sounds/${SOUNDS[1]}.mp3`,
+      `sounds/${SOUNDS[1]}.ogg`,
+    ]);
     // images
     this.load.image("bodyPart", "sprites/anakonda-body-part-alpha.png");
     this.load.image("headPart", "sprites/anakonda-head-alpha.png");
@@ -22,7 +28,7 @@ export default class LoaderScene extends Phaser.Scene {
 
   create(data: { fadeIn: boolean }) {
     // It needs to start
-    this.cameras.main.setBackgroundColor(COLOR_PALETTE.dark1);
+    this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkBlue);
     if (data.fadeIn) {
       this.cameras.main.fadeIn(700, 0, 0, 0);
       this.cameras.main.once(
