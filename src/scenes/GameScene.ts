@@ -41,6 +41,10 @@ export default class GameScene extends Phaser.Scene {
       COLOR_PALETTE.white
     );
     this.ball.setPosition(GRID_UNIT * 10, GRID_UNIT * 10);
+
+    // orientation checker
+    this.checkOrientation(this.scale.orientation);
+    this.scale.on("orientationchange", this.checkOrientation, this);
   }
 
   update(time) {
@@ -66,5 +70,14 @@ export default class GameScene extends Phaser.Scene {
   updatePoints() {
     this.points += 5;
     this.events.emit("ate", this.points);
+  }
+
+  checkOrientation(orientation) {
+    if (orientation === Phaser.Scale.PORTRAIT) {
+      console.log("is in portrait");
+    }
+    if (orientation === Phaser.Scale.LANDSCAPE) {
+      console.log("is in landscape");
+    }
   }
 }
