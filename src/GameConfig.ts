@@ -39,10 +39,14 @@ export const MAIN_TITLE = "PICK A BALL";
 
 export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: 40 * GRID_UNIT,
+  height: 18 * GRID_UNIT,
   physics: {
     default: "arcade",
+  },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   scene: [
     LogoScene,
