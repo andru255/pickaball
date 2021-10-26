@@ -32,17 +32,12 @@ export default class HUDScene extends Phaser.Scene {
 
   create() {
     this.scoreLabel = this.add.text(GRID_UNIT, GRID_UNIT / 2, "SCORE 00", {
-      font: "28px Berkelium",
+      font: `${GRID_UNIT}px Berkelium`,
     });
 
-    this.soundLabel = this.add.text(
-      GROUND.WIDTH - GRID_UNIT * 5,
-      GRID_UNIT / 2,
-      ``,
-      {
-        font: "28px Berkelium",
-      }
-    );
+    this.soundLabel = this.add.text(GROUND.WIDTH, GRID_UNIT / 2, ``, {
+      font: `${GRID_UNIT}px Berkelium`,
+    });
     let value = this.game.sound.mute ? "OFF" : "ON";
     this.setSoundStateText(value);
 

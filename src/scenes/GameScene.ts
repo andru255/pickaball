@@ -1,11 +1,12 @@
 import Phaser from "phaser";
 import { COLOR_PALETTE, GRID_UNIT, GROUND, SOUNDS } from "~/GameConfig";
-import { AnakondaObject } from "~/objects/Anakonda";
+import { BasketRimObject } from "~/objects/BasketRim";
 import BallImageObject from "~/objects/Ball";
 import GroundScene from "./GroundScene";
 
 export default class GameScene extends Phaser.Scene {
   private ball?: BallImageObject;
+  private basketRim?: BasketRimObject;
   private points: number = 0;
 
   private shotSound?: Phaser.Sound.BaseSound;
@@ -35,12 +36,15 @@ export default class GameScene extends Phaser.Scene {
       .launch(pauseResumeScene, { gameScene: this })
       .launch(gameOverScene, { gameScene: this });
     //objects setup
+    this.basketRim = groundScene.addBasketRim(
+      GROUND.X + GRID_UNIT,
+      GROUND.HEIGHT / 2
+    );
     this.ball = groundScene.addBall(
-      GROUND.X * GRID_UNIT * 3,
-      GROUND.Y * GRID_UNIT * 3,
+      GROUND.WIDTH,
+      GROUND.HEIGHT / 2,
       COLOR_PALETTE.white
     );
-    this.ball.setPosition(GRID_UNIT * 10, GRID_UNIT * 10);
 
     // orientation checker
     this.checkOrientation(this.scale.orientation);

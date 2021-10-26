@@ -20,17 +20,17 @@ export default class LoaderScene extends Phaser.Scene {
       `sounds/${SOUNDS[1]}.mp3`,
       `sounds/${SOUNDS[1]}.ogg`,
     ]);
-    // images
-    this.load.image("bodyPart", "sprites/anakonda-body-part-alpha.png");
-    this.load.image("headPart", "sprites/anakonda-head-alpha.png");
-    this.load.image("food", "sprites/food.png");
+    // image assets here
+    // this.load.image("bodyPart", "sprites/anakonda-body-part-alpha.png");
+    // this.load.image("headPart", "sprites/anakonda-head-alpha.png");
+    // this.load.image("food", "sprites/food.png");
   }
 
   create(data: { fadeIn: boolean }) {
     // It needs to start
     this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkBlue);
     if (data.fadeIn) {
-      this.cameras.main.fadeIn(700, 0, 0, 0);
+      this.cameras.main.fadeIn(0, 0, 0, 0);
       this.cameras.main.once(
         Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE,
         () => {

@@ -27,7 +27,7 @@ export const GRID_UNIT = 16;
 export const GROUND = {
   X: GRID_UNIT * 2,
   Y: GRID_UNIT * 3,
-  WIDTH: GRID_UNIT * 28,
+  WIDTH: GRID_UNIT * 32,
   HEIGHT: GRID_UNIT * 17,
 };
 

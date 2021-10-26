@@ -9,7 +9,6 @@ import ScoreService from "~/services/scoreService";
 import { MenuOption } from "./MenuScene";
 
 export default class HighScoreScene extends Phaser.Scene {
-  private iconAside?: Phaser.GameObjects.Sprite;
   private currentOptionIndex;
   private menuOptions: MenuOption[] = [];
 
@@ -57,12 +56,6 @@ export default class HighScoreScene extends Phaser.Scene {
         },
       },
     ];
-    this.iconAside = this.add.sprite(
-      GRID_UNIT * 7,
-      this.menuOptions[this.currentOptionIndex].y + GRID_UNIT / 2,
-      "food"
-    );
-
     // rendering buttons
     this.menuOptions.forEach((option, index) => {
       this.buildMenuOption(option, index);
