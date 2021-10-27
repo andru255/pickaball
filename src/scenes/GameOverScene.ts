@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { GRID_UNIT, GROUND, STORAGE_NAME } from "~/GameConfig";
-import ScoreService from "~/services/scoreService";
+import ScoreService from "~/services/score.service";
 
 export default class GameOverScene extends Phaser.Scene {
   private gameOverLabel?: Phaser.GameObjects.Text;

@@ -5,7 +5,7 @@ import {
   MAIN_TITLE,
   STORAGE_NAME,
 } from "~/GameConfig";
-import ScoreService from "~/services/scoreService";
+import ScoreService from "~/services/score.service";
 import { MenuOption } from "./MenuScene";
 
 export default class HighScoreScene extends Phaser.Scene {

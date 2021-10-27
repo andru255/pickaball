@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 import { COLOR_PALETTE, GRID_UNIT, GROUND, STORAGE_NAME } from "~/GameConfig";
-import ScoreService from "~/services/scoreService";
+import CountDownService from "~/services/countdown.service";
+import ScoreService from "~/services/score.service";
 
 export default class HUDScene extends Phaser.Scene {
   private scoreLabel?: Phaser.GameObjects.Text;
   private soundLabel?: Phaser.GameObjects.Text;
   private footerLabel?: Phaser.GameObjects.Text;
+  private countdownLabel?: Phaser.GameObjects.Text;
+  private countdownService?: CountDownService;
 
   private footerMessages = [
     "Press P to pause/resume the game",
@@ -31,12 +34,26 @@ export default class HUDScene extends Phaser.Scene {
   }
 
   create() {
+    const font = `${GRID_UNIT}px Berkelium`;
     this.scoreLabel = this.add.text(GRID_UNIT, GRID_UNIT / 2, "SCORE 00", {
-      font: `${GRID_UNIT}px Berkelium`,
+      font,
+    });
+
+    this.countdownLabel = this.add.text(
+      GROUND.WIDTH / 2,
+      GRID_UNIT / 2,
+      "00:00",
+      {
+        font,
+      }
+    );
+    this.countdownService = new CountDownService(this, this.countdownLabel);
+    this.countdownService?.start(() => {
+      console.log("done!");
     });
 
     this.soundLabel = this.add.text(GROUND.WIDTH, GRID_UNIT / 2, ``, {
-      font: `${GRID_UNIT}px Berkelium`,
+      font,
     });
     let value = this.game.sound.mute ? "OFF" : "ON";
     this.setSoundStateText(value);
@@ -59,6 +76,10 @@ export default class HUDScene extends Phaser.Scene {
         font: "28px Berkelium",
       }
     );
+  }
+
+  update() {
+    this.countdownService?.update();
   }
 
   private setScore(value = 0) {
