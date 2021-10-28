@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT, GROUND, MAIN_TITLE } from "~/GameConfig";
+import { COLOR_PALETTE, GRID_UNIT, GROUND, MAIN_TITLE } from "~/game.config";
 
 export interface MenuOption {
   x: number;

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT } from "~/GameConfig";
+import { COLOR_PALETTE, GRID_UNIT } from "~/game.config";
 
 export default class GameScene extends Phaser.Scene {
   imageName = "kerodekroma-logo";

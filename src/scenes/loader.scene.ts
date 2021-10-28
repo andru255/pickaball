@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT, SOUNDS } from "~/GameConfig";
+import { COLOR_PALETTE, GRID_UNIT, SOUNDS } from "~/game.config";
 
 export default class LoaderScene extends Phaser.Scene {
   /** just for fun **/

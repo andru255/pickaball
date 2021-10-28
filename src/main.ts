@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import customFont from "./customFont";
+import customFont from "./services/customFont.service";
 
-import { config } from "./GameConfig";
+import { config } from "./game.config";
 
 customFont();
 

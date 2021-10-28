@@ -1,4 +1,4 @@
-import berkelium from "./css/fonts/berkelium/berkelium.ttf";
+import berkelium from "../css/fonts/berkelium/berkelium.ttf";
 
 export default function customFont() {
   const style = document.createElement("link");

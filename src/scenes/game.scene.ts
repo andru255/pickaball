@@ -1,8 +1,9 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT, GROUND, SOUNDS } from "~/GameConfig";
-import { BasketRimObject } from "~/objects/BasketRim";
-import BallImageObject from "~/objects/Ball";
-import GroundScene from "./GroundScene";
+import { COLOR_PALETTE, GRID_UNIT, GROUND, SOUNDS } from "~/game.config";
+import { BasketRimObject } from "~/objects/basketRim.object";
+import BallImageObject from "~/objects/ball.object";
+import GroundScene from "./ground.scene";
+import { Position } from "~/services/calculator.service";
 
 export default class GameScene extends Phaser.Scene {
   private ball?: BallImageObject;
@@ -37,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
       .launch(gameOverScene, { gameScene: this });
     //objects setup
     this.basketRim = groundScene.addBasketRim(
-      GROUND.X + GRID_UNIT,
+      GROUND.X + GRID_UNIT * 2,
       GROUND.HEIGHT / 2
     );
     this.ball = groundScene.addBall(
@@ -45,14 +46,29 @@ export default class GameScene extends Phaser.Scene {
       GROUND.HEIGHT / 2,
       COLOR_PALETTE.white
     );
+    this.ball.setGravity(GROUND.GRAVITY);
 
     // orientation checker
     this.checkOrientation(this.scale.orientation);
     this.scale.on("orientationchange", this.checkOrientation, this);
+
+    // touch zone
+    const zone = this.add
+      .zone(GROUND.X, GROUND.Y, GROUND.WIDTH, GROUND.HEIGHT)
+      .setOrigin(0, 0)
+      .setInteractive({ cursor: "hand" })
+      .on("pointerup", (data) => {
+        const { downX, downY } = data;
+        const pos: Position = { x: downX, y: downY };
+        this.ball?.shot(pos);
+      });
+    // debugging touch area
+    this.add.graphics().lineStyle(2, 0x00ff00).strokeRectShape(zone);
   }
 
   update(time) {
     this.updateLogic(time);
+    this.ball?.update();
   }
 
   updateLogic(time) {

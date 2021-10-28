@@ -1,14 +1,14 @@
 import Phaser from "phaser";
-import GameOverScene from "./scenes/GameOverScene";
+import GameOverScene from "./scenes/gameOver.scene";
 
-import GameScene from "./scenes/GameScene";
-import GroundScene from "./scenes/GroundScene";
-import HighScoreScene from "./scenes/HighScoresScene";
-import HUDScene from "./scenes/HUDScene";
-import LoaderScene from "./scenes/LoaderScene";
-import LogoScene from "./scenes/LogoScene";
-import MenuScene from "./scenes/MenuScene";
-import PauseScene from "./scenes/PauseScene";
+import GameScene from "./scenes/game.scene";
+import GroundScene from "./scenes/ground.scene";
+import HighScoreScene from "./scenes/highScores.scene";
+import HUDScene from "./scenes/hud.scene";
+import LoaderScene from "./scenes/loader.scene";
+import LogoScene from "./scenes/logo.scene";
+import MenuScene from "./scenes/menu.scene";
+import PauseScene from "./scenes/pause.scene";
 
 // from: https://lospec.com/palette-list/funkyfuture-8
 export const COLOR_PALETTE = {
@@ -25,10 +25,11 @@ export const COLOR_PALETTE = {
 export const GRID_UNIT = 16;
 
 export const GROUND = {
-  X: GRID_UNIT * 2,
+  X: GRID_UNIT,
   Y: GRID_UNIT * 3,
-  WIDTH: GRID_UNIT * 32,
-  HEIGHT: GRID_UNIT * 17,
+  WIDTH: GRID_UNIT * 38,
+  HEIGHT: GRID_UNIT * 15,
+  GRAVITY: 0.5,
 };
 
 export const SOUNDS = ["shot", "die"];

@@ -4,9 +4,9 @@ import {
   GRID_UNIT,
   MAIN_TITLE,
   STORAGE_NAME,
-} from "~/GameConfig";
+} from "~/game.config";
 import ScoreService from "~/services/score.service";
-import { MenuOption } from "./MenuScene";
+import { MenuOption } from "./menu.scene";
 
 export default class HighScoreScene extends Phaser.Scene {
   private currentOptionIndex;
