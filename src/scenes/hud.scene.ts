@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT, GROUND, STORAGE_NAME } from "~/GameConfig";
+import { COLOR_PALETTE, GRID_UNIT, GROUND, STORAGE_NAME } from "~/game.config";
 import CountDownService from "~/services/countdown.service";
 import ScoreService from "~/services/score.service";
 
@@ -40,7 +40,7 @@ export default class HUDScene extends Phaser.Scene {
     });
 
     this.countdownLabel = this.add.text(
-      GROUND.WIDTH / 2,
+      GROUND.WIDTH / 2 - GRID_UNIT,
       GRID_UNIT / 2,
       "00:00",
       {
@@ -52,9 +52,14 @@ export default class HUDScene extends Phaser.Scene {
       console.log("done!");
     });
 
-    this.soundLabel = this.add.text(GROUND.WIDTH, GRID_UNIT / 2, ``, {
-      font,
-    });
+    this.soundLabel = this.add.text(
+      GROUND.WIDTH - GRID_UNIT * 6,
+      GRID_UNIT / 2,
+      ``,
+      {
+        font,
+      }
+    );
     let value = this.game.sound.mute ? "OFF" : "ON";
     this.setSoundStateText(value);
 

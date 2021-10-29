@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { GRID_UNIT, GROUND, STORAGE_NAME } from "~/GameConfig";
+import { GRID_UNIT, GROUND, STORAGE_NAME } from "~/game.config";
 import ScoreService from "~/services/score.service";
 
 export default class GameOverScene extends Phaser.Scene {

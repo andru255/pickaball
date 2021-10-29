@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { GRID_UNIT, COLOR_PALETTE, GROUND } from "~/GameConfig";
+import { GRID_UNIT, COLOR_PALETTE, GROUND } from "~/game.config";
 
 export class BasketRimObject {
   private body?: Phaser.GameObjects.Group;
