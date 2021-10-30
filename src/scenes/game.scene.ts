@@ -3,8 +3,7 @@ import { COLOR_PALETTE, GRID_UNIT, GROUND, SOUNDS } from "~/game.config";
 import { BasketRimObject } from "~/objects/basketRim.object";
 import BallImageObject from "~/objects/ball.object";
 import GroundScene from "./ground.scene";
-import { Position } from "~/services/calculator.service";
-
+import { Bound } from "~/services/calculator.service";
 export default class GameScene extends Phaser.Scene {
   private ball?: BallImageObject;
   private basketRim?: BasketRimObject;
@@ -38,12 +37,12 @@ export default class GameScene extends Phaser.Scene {
       .launch(gameOverScene, { gameScene: this });
     //objects setup
     this.basketRim = groundScene.addBasketRim(
-      GROUND.X + GRID_UNIT * 2,
+      GROUND.X + GRID_UNIT / 3,
       GROUND.HEIGHT / 2
     );
     this.ball = groundScene.addBall(
       GROUND.WIDTH,
-      GROUND.HEIGHT / 2,
+      GROUND.HEIGHT - GRID_UNIT * 2,
       COLOR_PALETTE.white
     );
     this.ball.setGravity(GROUND.GRAVITY);
@@ -59,20 +58,31 @@ export default class GameScene extends Phaser.Scene {
       .setInteractive({ cursor: "hand" })
       .on("pointerup", (data) => {
         const { downX, downY } = data;
-        const pos: Position = { x: downX, y: downY };
+        const pos: Bound = { x: downX, y: downY, width: 0, height: 0 };
+        if (this.ball?.isDisabled) {
+          return;
+        }
         this.ball?.shot(pos);
+        this.time.delayedCall(2000, () => {
+          this.ball?.reposition();
+          this.basketRim?.resetMark();
+        });
       });
     // debugging touch area
     this.add.graphics().lineStyle(2, 0x00ff00).strokeRectShape(zone);
   }
 
-  update(time) {
-    this.updateLogic(time);
-    this.ball?.update();
-  }
-
-  updateLogic(time) {
-    // logic here
+  update(time, delta) {
+    this.ball?.update(delta);
+    this.basketRim?.collideWithBall(
+      this.ball?.getBounds(),
+      (obj) => {
+        this.ball?.bounceIt(obj.getBounds());
+      },
+      () => {
+        this.updateScore();
+      }
+    );
   }
 
   endGame() {
@@ -87,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  updatePoints() {
+  updateScore() {
     this.points += 5;
     this.events.emit("ate", this.points);
   }

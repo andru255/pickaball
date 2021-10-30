@@ -29,7 +29,7 @@ export const GROUND = {
   Y: GRID_UNIT * 3,
   WIDTH: GRID_UNIT * 38,
   HEIGHT: GRID_UNIT * 15,
-  GRAVITY: 0.5,
+  GRAVITY: 0.01,
 };
 
 export const SOUNDS = ["shot", "die"];
