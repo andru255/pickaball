@@ -19,7 +19,7 @@ export default class GroundScene extends Phaser.Scene {
     return new BallImageObject(this, x, y, texture);
   }
 
-  addArrow(x = 0, y=0; texture) {
+  addArrow(x = 0, y = 0, texture) {
     return new ArrowObject(this, x, y, texture);
   }
 

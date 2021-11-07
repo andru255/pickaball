@@ -4,9 +4,11 @@ import { BasketRimObject } from "~/objects/basketRim.object";
 import BallImageObject from "~/objects/ball.object";
 import GroundScene from "./ground.scene";
 import { Bound } from "~/services/calculator.service";
+import ArrowObject from "~/objects/arrow.object";
 export default class GameScene extends Phaser.Scene {
-  private ball?: BallImageObject;
+  private ball!: BallImageObject;
   private basketRim?: BasketRimObject;
+  private arrow!: ArrowObject;
   private points: number = 0;
 
   private shotSound?: Phaser.Sound.BaseSound;
@@ -35,17 +37,31 @@ export default class GameScene extends Phaser.Scene {
       .launch(hudScene, { gameScene: this })
       .launch(pauseResumeScene, { gameScene: this })
       .launch(gameOverScene, { gameScene: this });
+
     //objects setup
     this.basketRim = groundScene.addBasketRim(
       GROUND.X + GRID_UNIT / 3,
       GROUND.HEIGHT / 2
     );
     this.ball = groundScene.addBall(
-      GROUND.WIDTH,
-      GROUND.HEIGHT - GRID_UNIT * 2,
+      GROUND.WIDTH - GRID_UNIT * 6,
+      GROUND.HEIGHT - GRID_UNIT * 4,
       COLOR_PALETTE.white
     );
     this.ball.setGravity(GROUND.GRAVITY);
+    this.arrow = groundScene.addArrow(
+      this.ball.getCenter().x + GRID_UNIT * 2,
+      this.ball.getCenter().y + GRID_UNIT * 2,
+      COLOR_PALETTE.blue
+    );
+    this.arrow.link(this.ball);
+    this.arrow.onDrag(() => {
+      this.arrow?.updateProjectionValues(this.ball);
+    });
+    this.arrow.onLeave((position) => {
+      this.arrow.hide();
+      this.shot({ x: position.x, y: position.y, width: 0, height: 0 });
+    });
 
     // orientation checker
     this.checkOrientation(this.scale.orientation);
@@ -59,30 +75,24 @@ export default class GameScene extends Phaser.Scene {
       .on("pointerup", (data) => {
         const { downX, downY } = data;
         const pos: Bound = { x: downX, y: downY, width: 0, height: 0 };
-        if (this.ball?.isDisabled) {
-          return;
-        }
-        this.ball?.shot(pos);
-        this.time.delayedCall(2000, () => {
-          this.ball?.reposition();
-          this.basketRim?.resetMark();
-        });
+        //this.shot(pos)
       });
     // debugging touch area
     this.add.graphics().lineStyle(2, 0x00ff00).strokeRectShape(zone);
   }
 
   update(time, delta) {
-    this.ball?.update(delta);
+    this.ball.update(delta);
     this.basketRim?.collideWithBall(
-      this.ball?.getBounds(),
+      this.ball.getBounds(),
       (obj) => {
-        this.ball?.bounceIt(obj.getBounds());
+        this.ball.bounceIt(obj.getBounds());
       },
       () => {
         this.updateScore();
       }
     );
+    this.arrow?.renderLink();
   }
 
   endGame() {
@@ -109,5 +119,19 @@ export default class GameScene extends Phaser.Scene {
     if (orientation === Phaser.Scale.LANDSCAPE) {
       console.log("is in landscape");
     }
+  }
+
+  shot(position: Bound) {
+    console.log("shot!");
+    if (this.ball.isDisabled) {
+      return;
+    }
+    this.ball.shot(position);
+    this.time.delayedCall(2000, () => {
+      console.log("rep!");
+      this.ball?.reposition();
+      this.arrow?.reset(this.ball);
+      this.basketRim?.resetMark();
+    });
   }
 }

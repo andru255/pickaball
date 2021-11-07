@@ -69,7 +69,7 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
       width: 0,
       height: 0,
     };
-    const speed = -this.calculator.distanceAABB(posA, bounds) / 100;
+    const speed = -this.calculator.distanceAABB(posA, bounds) / 90;
     this.vX = Math.cos(this.calculator.distanceAngle(posA, bounds)) * speed;
     this.vY = Math.sin(this.calculator.distanceAngle(posA, bounds)) * speed;
   }
@@ -81,14 +81,15 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
     this.isDisabled = true;
     const { x, y } = this.getBounds();
     const posA: Bound = {
-      x: x + this.width / 2 || 0,
-      y: y + this.height / 2 || 0,
+      x: this.getCenter().x,
+      y: this.getCenter().y,
       width: 0,
       height: 0,
     };
-    const speed = this.calculator.distanceAABB(posA, target) / 400;
-    this.vX = Math.cos(this.calculator.distanceAngle(posA, target)) * speed;
-    this.vY = Math.sin(this.calculator.distanceAngle(posA, target)) * speed;
+    const speed = this.calculator.distanceAABB(target, posA) / 90;
+    const angle = this.calculator.distanceAngle(target, posA);
+    this.vX = Math.cos(angle) * speed;
+    this.vY = Math.sin(angle) * speed;
     this.accY = this.gravity;
   }
 
