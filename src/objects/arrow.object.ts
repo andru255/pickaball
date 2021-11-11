@@ -4,8 +4,8 @@ import CalculatorService, { Bound } from "~/services/calculator.service";
 
 export default class ArrowObject {
   private readonly stateSizes = {
-    normal: { width: GRID_UNIT, height: GRID_UNIT },
-    pressed: { width: GRID_UNIT * 2, height: GRID_UNIT * 2 },
+    normal: { width: GRID_UNIT * 2, height: GRID_UNIT * 2 },
+    pressed: { width: GRID_UNIT * 3, height: GRID_UNIT * 3 },
   };
   private onLeaveEvt = (centerPos: Phaser.Math.Vector2) => {};
   private onDragEvt = () => {};
