@@ -11,6 +11,7 @@ export default class ArrowObject {
   private onDragEvt = () => {};
   private body?: Phaser.GameObjects.Group;
   private box!: Phaser.GameObjects.Sprite;
+  private draggableArea!: Phaser.GameObjects.Arc;
   private linkLine!: Phaser.Geom.Line;
   private projection!: Phaser.Curves.Line;
   private graphics!: Phaser.GameObjects.Graphics;
@@ -50,11 +51,47 @@ export default class ArrowObject {
     });
 
     scene.input.on("drag", (pointer, gameObject, dragX, dragY) => {
-      this.box.setPosition(dragX, dragY);
-      this.linkLine.x1 = dragX;
-      this.linkLine.y1 = dragY;
+      console.log("circle", this.draggableArea.getBounds());
+      const { x: x1, y: y1 } = this.draggableArea.getBounds();
+      let distance = this.calculador.distanceAABB(
+        { x: x1, y: y1, width: 0, height: 0 },
+        {
+          x: dragX - this.box.width,
+          y: dragY - this.box.height,
+          width: 0,
+          height: 0,
+        }
+      );
+      const angle = this.calculador.distanceAngle(
+        { x: x1, y: y1, width: 0, height: 0 },
+        {
+          x: dragX - this.box.width,
+          y: dragY - this.box.height,
+          width: 0,
+          height: 0,
+        }
+      );
+      console.log("DRAG::angle", (angle / Math.PI) * 180, (90 * Math.PI) / 180);
+      if (
+        distance < GRID_UNIT * 4 * 2 &&
+        (angle / Math.PI) * 180 < 50 &&
+        (angle / Math.PI) * 180 > 30
+      ) {
+        this.linkLine.x1 = dragX;
+        this.linkLine.y1 = dragY;
+        this.box.setPosition(dragX, dragY);
+      }
       this.onDragEvt();
     });
+
+    //setup draggeable area
+    this.draggableArea = scene.add.circle(
+      0,
+      0,
+      GRID_UNIT * 4,
+      COLOR_PALETTE.lightBlue,
+      0.3
+    );
   }
 
   public onLeave(callback = (centerPos: Phaser.Math.Vector2) => {}) {
@@ -72,6 +109,7 @@ export default class ArrowObject {
     this.linkLine = new Phaser.Geom.Line(x1, y1, x2, y2);
     const dots = this.buildProjectionDots(ball);
     this.projection = new Phaser.Curves.Line(dots);
+    this.draggableArea.setPosition(x2, y2);
   }
 
   public updateProjectionValues(ball: BallImageObject) {
