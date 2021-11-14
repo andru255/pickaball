@@ -1,5 +1,11 @@
 import Phaser from "phaser";
-import { COLOR_PALETTE, GRID_UNIT, GROUND, SOUNDS } from "~/game.config";
+import {
+  COLOR_PALETTE,
+  GRID_UNIT,
+  GROUND,
+  INITAL_DURATION_ATTEMPT,
+  SOUNDS,
+} from "~/game.config";
 import { BasketRimObject } from "~/objects/basketRim.object";
 import BallImageObject from "~/objects/ball.object";
 import GroundScene from "./ground.scene";
@@ -15,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
   private timeOutSound?: Phaser.Sound.BaseSound;
   private isEnabledTimeOutSound: boolean = true;
   private isMuted = false;
+  private timeToRestartShot = INITAL_DURATION_ATTEMPT;
+  private timerInShot!: Phaser.Time.TimerEvent;
 
   constructor() {
     super("Game");
@@ -87,6 +95,8 @@ export default class GameScene extends Phaser.Scene {
       this.ball.getBounds(),
       (obj) => {
         this.ball.bounceIt(obj.getBounds());
+        this.timeToRestartShot += 100;
+        this.timerInShot = this.generateDelayedCall(this.timeToRestartShot);
       },
       () => {
         this.updateScore();
@@ -122,16 +132,22 @@ export default class GameScene extends Phaser.Scene {
   }
 
   shot(position: Bound) {
-    console.log("shot!");
     if (this.ball.isDisabled) {
       return;
     }
     this.ball.shot(position);
-    this.time.delayedCall(2000, () => {
-      console.log("rep!");
+    this.timerInShot = this.generateDelayedCall(this.timeToRestartShot);
+  }
+
+  private generateDelayedCall(time) {
+    if (this.timerInShot) {
+      this.timerInShot.remove();
+    }
+    return this.time.delayedCall(time, () => {
       this.ball?.reposition();
       this.arrow?.reset(this.ball);
       this.basketRim?.resetMark();
+      this.timeToRestartShot = INITAL_DURATION_ATTEMPT;
     });
   }
 }

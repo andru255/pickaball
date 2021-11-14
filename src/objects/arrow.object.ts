@@ -51,7 +51,6 @@ export default class ArrowObject {
     });
 
     scene.input.on("drag", (pointer, gameObject, dragX, dragY) => {
-      console.log("circle", this.draggableArea.getBounds());
       const { x: x1, y: y1 } = this.draggableArea.getBounds();
       let distance = this.calculador.distanceAABB(
         { x: x1, y: y1, width: 0, height: 0 },
@@ -71,7 +70,6 @@ export default class ArrowObject {
           height: 0,
         }
       );
-      console.log("DRAG::angle", (angle / Math.PI) * 180, (90 * Math.PI) / 180);
       if (
         distance < GRID_UNIT * 4 * 2 &&
         (angle / Math.PI) * 180 < 50 &&
@@ -161,10 +159,6 @@ export default class ArrowObject {
       { x: x1, y: y1, width: 0, height: 0 },
       { x: x2, y: y2, width: 0, height: 0 }
     );
-
-    console.log("ball", x2, y2);
-    console.log("distance", distance);
-    console.log("angle", angle, (angle / Math.PI) * 180);
 
     const speed = distance;
     const accY = GROUND.GRAVITY;
