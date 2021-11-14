@@ -38,6 +38,8 @@ export const STORAGE_NAME = "pickaball-score";
 
 export const MAIN_TITLE = "PICK A BALL";
 
+export const INITAL_DURATION_ATTEMPT = 2000;
+
 export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 40 * GRID_UNIT,

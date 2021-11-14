@@ -4,10 +4,11 @@ import CalculatorService, { Bound } from "~/services/calculator.service";
 export default class BallImageObject extends Phaser.GameObjects.Image {
   public vY = 0;
   public vX = 0;
+  public vR = 0;
   private gravity = 0;
   private accY = 0;
   private accX = 0;
-  private bounce = -1;
+  private bounce = -0.8;
   public isDisabled = false;
   private calculator = new CalculatorService();
   private initPos = { x: 0, y: 0 };
@@ -28,25 +29,24 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
   update(delta: number) {
     const { width, height } = this.getBounds();
     const { x: centerX, y: centerY } = this.getCenter();
-    //this.rotation += 0.1;
     // touch the left
-    if (centerX - width / 2 < GROUND.X) {
-      this.x = GROUND.X + width / 2;
-      this.vX *= this.bounce;
-    }
+    //if (centerX - width / 2 < GROUND.X) {
+    //  this.x = GROUND.X + width / 2;
+    //  this.vX *= this.bounce;
+    //}
 
     // touch the right
-    if (centerX + width / 2 > GROUND.X + GROUND.WIDTH) {
-      this.x = GROUND.X + GROUND.WIDTH - width / 2;
-      this.vX *= this.bounce;
-    }
+    // if (centerX + width / 2 > GROUND.X + GROUND.WIDTH) {
+    //   this.x = GROUND.X + GROUND.WIDTH - width / 2;
+    //   this.vX *= this.bounce;
+    // }
 
     // touch the top
-    if (centerY - height / 2 < GROUND.Y) {
-      // this.vY = -this.velocityY;
-      this.y = GROUND.Y + height / 2;
-      this.vY *= this.bounce;
-    }
+    // if (centerY - height / 2 < GROUND.Y) {
+    //   // this.vY = -this.velocityY;
+    //   this.y = GROUND.Y + height / 2;
+    //   this.vY *= this.bounce;
+    // }
 
     // touch the bottom
     if (centerY + height / 2 > GROUND.Y + GROUND.HEIGHT) {
@@ -59,6 +59,7 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
     this.vX += this.accX;
     this.x += delta * this.vX;
     this.y += delta * this.vY;
+    this.rotation += this.vR;
   }
 
   bounceIt(bounds: Bound) {
@@ -72,6 +73,7 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
     const speed = -this.calculator.distanceAABB(posA, bounds) / 90;
     this.vX = Math.cos(this.calculator.distanceAngle(posA, bounds)) * speed;
     this.vY = Math.sin(this.calculator.distanceAngle(posA, bounds)) * speed;
+    this.vR = this.vX;
   }
 
   shot(target: Bound) {
@@ -90,6 +92,7 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
     const angle = this.calculator.distanceAngle(target, posA);
     this.vX = Math.cos(angle) * speed;
     this.vY = Math.sin(angle) * speed;
+    this.vR = 0.1;
     this.accY = this.gravity;
   }
 
@@ -99,6 +102,8 @@ export default class BallImageObject extends Phaser.GameObjects.Image {
     this.vY = 0;
     this.accX = 0;
     this.accY = 0;
+    this.rotation = 0;
+    this.vR = 0;
     this.setPosition(this.initPos.x, this.initPos.y);
   }
 }
