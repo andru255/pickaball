@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import { GRID_UNIT, COLOR_PALETTE, GROUND } from "~/game.config";
 import CalculatorService, { Bound } from "~/services/calculator.service";
-import BallImageObject from "./ball.object";
 
 export class BasketRimObject {
   private body?: Phaser.GameObjects.Group;
@@ -9,11 +8,12 @@ export class BasketRimObject {
   private leftCorner: Phaser.GameObjects.Sprite;
   private rightCorner: Phaser.GameObjects.Sprite;
   private goal: Phaser.GameObjects.Sprite;
+  private rimSprite: Phaser.GameObjects.Sprite;
 
   private calculator = new CalculatorService();
   private isMark = false;
 
-  constructor(scene: Phaser.Scene, x, y) {
+  constructor(scene: Phaser.Scene, x, y, textures = { rim: "", board: "" }) {
     this.body = scene.add.group({
       defaultKey: "basketRimBody",
       createCallback: (obj) => {},
@@ -35,7 +35,7 @@ export class BasketRimObject {
       x + GRID_UNIT * 2.5 + this.leftCorner.getBounds().x,
       y
     );
-    this.rightCorner.setTintFill(COLOR_PALETTE.darkBlue);
+    this.rightCorner.setTintFill(COLOR_PALETTE.lightOrange);
     this.rightCorner.setDisplaySize(edgeSizes.width, edgeSizes.height);
 
     // goal area
@@ -47,6 +47,11 @@ export class BasketRimObject {
     this.goal.setTintFill(COLOR_PALETTE.lightBlue);
     this.goal.setDisplaySize(goalAreaSize.width, goalAreaSize.height);
     this.goal.alpha = 0.4;
+
+    this.rimSprite = this.body.create(x + edgeSizes.width * 4, y);
+    this.rimSprite.setDisplaySize(edgeSizes.width * 8, edgeSizes.height);
+    this.rimSprite.setTintFill(COLOR_PALETTE.orange);
+    //this.rimSprite.alpha = 0.7;
   }
 
   collideWithBall(
