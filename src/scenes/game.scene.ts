@@ -30,7 +30,7 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.points = 0;
-    this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkOrange);
+    this.cameras.main.setBackgroundColor(COLOR_PALETTE.darkBlue);
 
     this.shotSound = this.sound.add(SOUNDS[0]);
     this.timeOutSound = this.sound.add(SOUNDS[1]);
@@ -54,13 +54,13 @@ export default class GameScene extends Phaser.Scene {
     this.ball = groundScene.addBall(
       GROUND.WIDTH - GRID_UNIT * 6,
       GROUND.HEIGHT - GRID_UNIT * 4,
-      COLOR_PALETTE.white
+      "ball"
     );
     this.ball.setGravity(GROUND.GRAVITY);
     this.arrow = groundScene.addArrow(
       this.ball.getCenter().x + GRID_UNIT * 2,
       this.ball.getCenter().y + GRID_UNIT * 2,
-      COLOR_PALETTE.blue
+      "cursor"
     );
     this.arrow.link(this.ball);
     this.arrow.onDrag(() => {

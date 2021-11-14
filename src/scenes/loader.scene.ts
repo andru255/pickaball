@@ -23,7 +23,8 @@ export default class LoaderScene extends Phaser.Scene {
     // image assets here
     // this.load.image("bodyPart", "sprites/anakonda-body-part-alpha.png");
     // this.load.image("headPart", "sprites/anakonda-head-alpha.png");
-    // this.load.image("food", "sprites/food.png");
+    this.load.image("ball", "sprites/ball-darks.png");
+    this.load.image("cursor", "sprites/cursor.png");
   }
 
   create(data: { fadeIn: boolean }) {

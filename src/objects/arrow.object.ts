@@ -27,16 +27,16 @@ export default class ArrowObject {
     });
 
     this.graphics = scene.add.graphics({
-      fillStyle: { color: COLOR_PALETTE.blue },
-      lineStyle: { color: COLOR_PALETTE.blue },
+      fillStyle: { color: COLOR_PALETTE.white },
+      lineStyle: { color: COLOR_PALETTE.white },
     });
 
     const { normal, pressed } = this.stateSizes;
 
     // setup box
-    this.box = this.body.create(x, y);
+    this.box = this.body.create(x, y, texture);
     this.box.setDisplaySize(normal.width, normal.height);
-    this.box.setTintFill(COLOR_PALETTE.darkBlue);
+    this.box.setTintFill(COLOR_PALETTE.white);
     this.box.setInteractive();
     scene.input.setDraggable(this.box);
 
@@ -88,7 +88,7 @@ export default class ArrowObject {
       0,
       GRID_UNIT * 4,
       COLOR_PALETTE.lightBlue,
-      0.3
+      0
     );
   }
 
@@ -141,7 +141,7 @@ export default class ArrowObject {
 
   public renderLink() {
     this.graphics.clear();
-    this.graphics.strokeLineShape(this.linkLine);
+    //this.graphics.strokeLineShape(this.linkLine);
     this.projection.getPoints().map((point) => {
       this.graphics.fillRect(point.x, point.y, 5, 5);
     });
